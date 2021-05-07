@@ -1,16 +1,19 @@
 #include "Cupdetection.h"
 
+using namespace cv;
+
 Cupdetection::Cupdetection()
 {
 
 }
 
-cv::Mat Cupdetection::colordetection(cv::Mat img, cv::Scalar lower,cv::Scalar upper)
+Mat Cupdetection::colordetection(Mat img, Scalar lower,Scalar upper)
 {
-  cv::Mat img_HSV, mask;
-  cv::cvtColor(img, img_HSV, cv::COLOR_BGR2HSV);
+  Mat img_HSV, mask;
+  cvtColor(img, img_HSV, COLOR_BGR2HSV);
 
-  cv::inRange(img_HSV, lower, upper, mask);
+  inRange(img_HSV, lower, upper, mask);
+  //imshow("HSV",img_HSV);
 
   return mask;
 }

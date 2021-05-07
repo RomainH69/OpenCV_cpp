@@ -1,5 +1,5 @@
 all: main BasicTest Cupdetection
-	g++ main.o BasicTest.o Cupdetection.o -o opencv -L/usr/lib/x86_64-linux-gnu -lopencv_core -lopencv_highgui -lopencv_imgproc -lopencv_imgcodecs
+	g++ *.o -o opencv -L/usr/lib/x86_64-linux-gnu -lopencv_core -lopencv_highgui -lopencv_imgproc -lopencv_imgcodecs -lopencv_videoio $(pkg-config --libs opencv)
 
 main: main.cpp
 	g++ -c main.cpp -I/usr/include/opencv4
