@@ -1,5 +1,6 @@
 #include <iostream>
 #include "opencv2/opencv.hpp"
+#include "opencv2/core/core.hpp"
 #include "opencv2/highgui.hpp"
 #include "opencv2/imgproc.hpp"
 
@@ -9,16 +10,12 @@
 using namespace cv;
 
 
-int hmin=0, smin=70, vmin=153;
-int hmax=50, smax=240, vmax=255;
-
-
 int main()
 {
 
 	Mat img =imread("test.jpg");
 	BasicTest *test = new BasicTest();
-	Cupdetection *red= new Cupdetection();
+	Cupdetection *red= new Cupdetection(0,16,87,255,229,255);
 
 	//test->test(img);
 
@@ -27,25 +24,29 @@ int main()
 	Mat cam;
 
 	//Trackbars to adjust bounds
-	namedWindow("Trackbars", (600,200));
-	createTrackbar("Hue min", "Trackbars", &hmin, 179);
-	createTrackbar("Hue max", "Trackbars", &hmax, 255);
 
-	createTrackbar("Sat min", "Trackbars", &smin, 255);
-	createTrackbar("Sat max", "Trackbars", &smax, 255);
 
-	createTrackbar("Val min", "Trackbars", &vmin, 255);
-	createTrackbar("Val max", "Trackbars", &vmax, 255);
 
+/*
+	namedWindow("Trackbars BGR", (600,200));
+	createTrackbar("Blue min", "Trackbars BGR", &bmin, 255);
+	createTrackbar("Blue max", "Trackbars BGR", &bmax, 255);
+
+	createTrackbar("Green min", "Trackbars BGR", &gmin, 255);
+	createTrackbar("Green max", "Trackbars BGR", &gmax, 255);
+
+	createTrackbar("Red min", "Trackbars BGR", &rmin, 255);
+	createTrackbar("Red max", "Trackbars BGR", &rmax, 255);
+
+	*/
+	Mat mask;
+	red->calibrateHSV(cap);
 
 	while (true) {
 		cap.read(cam);
 
-		//definition of color bounds
-		Scalar lower=(hmin, smin, vmin);
-		Scalar upper=(hmax, smax, vmax);
 
-		Mat mask=red->colordetection(cam, lower, upper);
+		red->colordetection(cam, mask);
 
 		imshow("Cam", cam);
 		imshow("Mask", mask);

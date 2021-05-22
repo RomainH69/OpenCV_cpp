@@ -12,4 +12,4 @@ Cupdetection: Cupdetection.cpp Cupdetection.h
 
 clean:
 	del *.o
-	del a.out
+	del *.out
