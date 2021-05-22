@@ -15,7 +15,8 @@ int main()
 
 	Mat img =imread("test.jpg");
 	BasicTest *test = new BasicTest();
-	Cupdetection *red= new Cupdetection(0,16,87,255,229,255);
+	Cupdetection *red= new Cupdetection(0,14,140,255,130,255,Scalar(0,0,255));
+	Cupdetection *green= new Cupdetection(49,92,87,255,75,202,Scalar(0,255,0));
 
 	//test->test(img);
 
@@ -39,17 +40,23 @@ int main()
 	createTrackbar("Red max", "Trackbars BGR", &rmax, 255);
 
 	*/
-	Mat mask;
+	Mat red_mask, green_mask, img_contours;
 	red->calibrateHSV(cap);
+	green->calibrateHSV(cap);
 
 	while (true) {
 		cap.read(cam);
+		cam.copyTo(img_contours);
 
+		red->colordetection(cam, red_mask);
+		red->contourdetection(red_mask,img_contours);
 
-		red->colordetection(cam, mask);
+		green->colordetection(cam, green_mask);
+		green->contourdetection(green_mask,img_contours);
+
 
 		imshow("Cam", cam);
-		imshow("Mask", mask);
+		imshow("Contours", img_contours);
 		waitKey(1);
 	}
 
