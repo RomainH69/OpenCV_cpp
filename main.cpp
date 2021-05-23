@@ -6,6 +6,7 @@
 
 #include "BasicTest.h"
 #include "Cupdetection.h"
+#include "Camera_calibration.h"
 
 using namespace cv;
 
@@ -17,6 +18,7 @@ int main()
 	BasicTest *test = new BasicTest();
 	Cupdetection *red= new Cupdetection(0,14,140,255,130,255,Scalar(0,0,255));
 	Cupdetection *green= new Cupdetection(49,92,87,255,75,202,Scalar(0,255,0));
+	Camera_calibration *camera=new Camera_calibration();
 
 	//test->test(img);
 
@@ -40,6 +42,9 @@ int main()
 	createTrackbar("Red max", "Trackbars BGR", &rmax, 255);
 
 	*/
+
+	camera->calibrateCam(cap);
+
 	Mat red_mask, green_mask, img_contours;
 	red->calibrateHSV(cap);
 	green->calibrateHSV(cap);
