@@ -33,7 +33,7 @@ void Camera_calibration::getChessboardCorners(vector<Mat> images, vector<vector<
 
     if(showResults)
     {
-      drawChessboardCorners(*iter,Size(9,6),pointBuff,found);
+      drawChessboardCorners(*iter,Size(6,9),pointBuff,found);
       imshow("corners", *iter);
       waitKey(0);
     }
@@ -48,6 +48,7 @@ void Camera_calibration::cameraCalibration(vector<Mat> calibrationImage, Size bo
   vector<vector<Point3f>> worldSpaceCornerPoints(1);
 
   createKnownBoardPosition(boardSize, squareEdgeLenght, worldSpaceCornerPoints[0]);
+  worldSpaceCornerPoints.resize(checkerboardImageSpacePoints.size(), worldSpaceCornerPoints[0]);
 
   vector<Mat> rVector, tVector;
   distanceCoefficients=Mat::zeros(8,1, CV_64F);

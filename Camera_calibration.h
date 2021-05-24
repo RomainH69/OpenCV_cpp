@@ -21,6 +21,6 @@ public:
 
 private:
   const float squareDimension = 0.0234f; //meters
-  const Size chessboardDimension = Size(6,9);
+  const Size chessboardDimension = Size(9,6);
 
 };
